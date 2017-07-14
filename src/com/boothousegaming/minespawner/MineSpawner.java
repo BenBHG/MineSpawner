@@ -1,4 +1,4 @@
-package com.darkbytelabs.minespawner;
+package com.boothousegaming.minespawner;
 
 import java.util.Arrays;
 
