@@ -80,7 +80,7 @@ public class MineSpawner extends JavaPlugin implements Listener {
 			if (item.getType().equals(Material.MOB_SPAWNER)) {
 				itemMeta = item.getItemMeta();
 				if (itemMeta.hasLore()) {
-					((CreatureSpawner)block.getState()).setSpawnedType(EntityType.valueOf(itemMeta.getLore().get(0)));
+					((CreatureSpawner)block.getState()).setSpawnedType(EntityType.valueOf(itemMeta.getLore().get(0).toUpperCase()));
 				}
 			}
 		}
