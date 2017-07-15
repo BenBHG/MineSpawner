@@ -9,6 +9,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -50,12 +51,12 @@ public class MineSpawner extends JavaPlugin implements Listener {
 		
 		block = event.getBlock();
 		if (block.getType().equals(Material.MOB_SPAWNER)) {
-			item = event.getPlayer().getItemInHand();
+			item = event.getPlayer().getInventory().getItemInMainHand();
 			if (!requirePickaxe || item.getType().name().endsWith("_PICKAXE")) {
 				if (!requireSilkTouch || item.containsEnchantment(Enchantment.SILK_TOUCH)) {
 					item = new ItemStack(Material.MOB_SPAWNER);
 					itemMeta = item.getItemMeta();
-					itemMeta.setLore(Arrays.asList(((CreatureSpawner)block.getState()).getCreatureTypeName()));
+					itemMeta.setLore(Arrays.asList(((CreatureSpawner)block.getState()).getSpawnedType().name()));
 					item.setItemMeta(itemMeta);
 					world = block.getWorld();
 					location = block.getLocation();
@@ -79,7 +80,7 @@ public class MineSpawner extends JavaPlugin implements Listener {
 			if (item.getType().equals(Material.MOB_SPAWNER)) {
 				itemMeta = item.getItemMeta();
 				if (itemMeta.hasLore()) {
-					((CreatureSpawner)block.getState()).setCreatureTypeByName(itemMeta.getLore().get(0));
+					((CreatureSpawner)block.getState()).setSpawnedType(EntityType.valueOf(itemMeta.getLore().get(0)));
 				}
 			}
 		}
